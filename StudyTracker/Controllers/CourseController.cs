@@ -1,14 +1,22 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using StudyTracker.ViewModelBuilders;
 
 namespace StudyTracker.Controllers
 {
     public class CourseController : Controller
     {
+        private readonly CoursesVmBuilder _coursesVmBuilder;
+        public CourseController()
+        {
+            _coursesVmBuilder = new CoursesVmBuilder();
+        }
+
         // GET: CourseController
         public ActionResult Index()
         {
-            return View();
+            var coursesVm = _coursesVmBuilder.GetCoursesVm();
+            return View(coursesVm);
         }
 
         // GET: CourseController/Details/5
