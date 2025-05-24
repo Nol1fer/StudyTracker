@@ -1,21 +1,27 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using StudyTracker.Models;
+using StudyTracker.ViewModels;
+using StudyTracker.ViewModelBuilders;
+
 
 namespace StudyTracker.Controllers;
 
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
+    private readonly CoursesVmBuilder _coursesVmBuilder;
 
-    public HomeController(ILogger<HomeController> logger)
+    public HomeController(ILogger<HomeController> logger, CoursesVmBuilder coursesVmBuilder)
     {
         _logger = logger;
+        _coursesVmBuilder = coursesVmBuilder;
     }
 
     public IActionResult Index()
     {
-        return View();
+        var coursesVm = _coursesVmBuilder.GetCoursesVm();
+        return View(coursesVm);
     }
 
     public IActionResult Privacy()
