@@ -1,4 +1,5 @@
 ﻿using StudyTracker.Models;
+using StudyTracker.Repositories;
 using StudyTracker.Services;
 using StudyTracker.ViewModels;
 
@@ -7,9 +8,9 @@ namespace StudyTracker.ViewModelBuilders
     public class CoursesVmBuilder
     {
         private readonly CourseService _courseService;
-        public CoursesVmBuilder()
+        public CoursesVmBuilder(CourseService courseService)
         {
-            _courseService = new CourseService();
+            _courseService = courseService;
         }
 
         public CoursesVm GetCoursesVm()

@@ -7,9 +7,9 @@ namespace StudyTracker.Services
     {
         private readonly CourseRepository _repository;
 
-        public CourseService()
+        public CourseService(CourseRepository repository)
         {
-            _repository = new CourseRepository();
+            _repository = repository;
         }
 
         public List<Course> GetCourses()
@@ -20,6 +20,11 @@ namespace StudyTracker.Services
         public void AddCourse(Course course)
         {
             _repository.AddCourse(course);
+        }
+
+        public void RemoveCourse(int id)
+        {
+            _repository.RemoveCourse(id);
         }
     }
 }

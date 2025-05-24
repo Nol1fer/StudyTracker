@@ -1,5 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿// using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using StudyTracker.Services;
 using StudyTracker.ViewModelBuilders;
 
 namespace StudyTracker.Controllers
@@ -7,9 +8,12 @@ namespace StudyTracker.Controllers
     public class CourseController : Controller
     {
         private readonly CoursesVmBuilder _coursesVmBuilder;
-        public CourseController()
+        private readonly CourseService _courseService;
+        public CourseController(CourseService courseService, CoursesVmBuilder coursesVmBuilder)
         {
-            _coursesVmBuilder = new CoursesVmBuilder();
+            //_coursesVmBuilder = new CoursesVmBuilder();
+            _coursesVmBuilder = coursesVmBuilder;
+            _courseService = courseService;
         }
 
         // GET: CourseController
@@ -70,7 +74,9 @@ namespace StudyTracker.Controllers
         // GET: CourseController/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            //return View();
+            _courseService.RemoveCourse(id);
+            return RedirectToAction(nameof(Index));
         }
 
         // POST: CourseController/Delete/5

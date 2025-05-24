@@ -4,10 +4,13 @@ namespace StudyTracker.Repositories
 {
     public class CourseRepository
     {
-        private List<Course> _courses;
+        private List<Course> _courses = new List<Course>();
         public CourseRepository()
         {
-            SetDefaultCourses();
+            if (_courses?.Count == 0)
+            {
+                SetDefaultCourses();
+            }
         }
 
         public void SetDefaultCourses()
@@ -28,5 +31,12 @@ namespace StudyTracker.Repositories
         {
             _courses.Add(course);
         }
+
+        public void RemoveCourse(int id)
+        {
+            var course = _courses.Single(c => c.Id == id);
+            _courses.Remove(course);
+        }
+
     }
 }
