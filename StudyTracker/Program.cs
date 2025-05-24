@@ -1,3 +1,5 @@
+using StudyTracker.ViewModelBuilders;
+
 namespace StudyTracker
 {
     public class Program
@@ -8,6 +10,7 @@ namespace StudyTracker
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+            builder.Services.AddSingleton<CoursesVmBuilder>();
 
             var app = builder.Build();
 
