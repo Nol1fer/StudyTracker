@@ -10,18 +10,19 @@ namespace StudyTracker.Controllers;
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
-    private readonly CoursesVmBuilder _coursesVmBuilder;
+    //private readonly CoursesVmBuilder _coursesVmBuilder;
 
     public HomeController(ILogger<HomeController> logger, CoursesVmBuilder coursesVmBuilder)
     {
         _logger = logger;
-        _coursesVmBuilder = coursesVmBuilder;
+        //_coursesVmBuilder = coursesVmBuilder;
     }
 
     public IActionResult Index()
     {
-        var coursesVm = _coursesVmBuilder.GetCoursesVm();
-        return View(coursesVm);
+        //var coursesVm = _coursesVmBuilder.GetCoursesVm();
+        //return View(coursesVm);
+        return RedirectToAction(nameof(CourseController.Index), "Course");
     }
 
     public IActionResult Privacy()
