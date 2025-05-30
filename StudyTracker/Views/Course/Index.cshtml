@@ -25,6 +25,11 @@
 			<td>@course.ProfessorName</td>
 			<td>@Html.ActionLink("Edit", nameof(CourseController.Edit), new { id = course.Id })</td>
 			<td>@Html.ActionLink("Delete", nameof(CourseController.Delete), new { id = course.Id })</td>
+			<td>
+				@Html.ActionLink("Задания", "Tasks", new { id = course.Id }) |
+				@Html.ActionLink("Редактировать", "Edit", new { id = course.Id }) |
+				@Html.ActionLink("Удалить", "Delete", new { id = course.Id })
+			</td>
 		</tr>
 	}
 </table>

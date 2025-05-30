@@ -11,6 +11,8 @@ namespace StudyTracker.Models
         [Required(ErrorMessage = "Имя преподавателя обязательно")]
         public string ProfessorName { get; set; }
 
+        public List<Task> Tasks { get; set; } = new List<Task>();
+
         public Course()
         {
             Name = string.Empty;

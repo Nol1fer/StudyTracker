@@ -130,5 +130,12 @@ namespace StudyTracker.Controllers
                 return View("Error");
             }
         }
+        // метод для просмотра заданий курса
+        public IActionResult Tasks(int id) // id курса
+        {
+            var course = _courseService.GetCourses().FirstOrDefault(c => c.Id == id);
+            if (course == null) return NotFound();
+            return RedirectToAction("Index", "Task", new { courseId = id });
+        }
     }
 }

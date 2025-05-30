@@ -16,6 +16,9 @@ namespace StudyTracker
             builder.Services.AddSingleton<CourseRepository>();
             builder.Services.AddSingleton<CoursesVmBuilder>();
 
+            builder.Services.AddSingleton<TaskRepository>();
+            builder.Services.AddSingleton<TaskService>();
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
