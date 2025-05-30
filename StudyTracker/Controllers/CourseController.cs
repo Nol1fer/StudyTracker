@@ -1,5 +1,6 @@
 ﻿// using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using StudyTracker.Models;
 using StudyTracker.Services;
 using StudyTracker.ViewModelBuilders;
 
@@ -37,59 +38,96 @@ namespace StudyTracker.Controllers
         // POST: CourseController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(Course course)  // Измените параметр!
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                if (ModelState.IsValid)  // Проверка валидации
+                {
+                    // Генерируем новый Id (временное решение до подключения БД)
+                    course.Id = _courseService.GetCourses().Max(c => c.Id) + 1;
+                    _courseService.AddCourse(course);
+                    return RedirectToAction(nameof(Index));
+                }
+                return View(course);  // Если есть ошибки валидации
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                ViewBag.Error = "Ошибка: " + ex.Message;
+                return View("Error");
             }
         }
 
         // GET: CourseController/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            var course = _courseService.GetCourses().FirstOrDefault(c => c.Id == id);
+            if (course == null)
+            {
+                ViewBag.Error = "Курс не найден";
+                return View("Error");
+            }
+            return View(course);
         }
 
         // POST: CourseController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(int id, Course updatedCourse)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                if (ModelState.IsValid)
+                {
+                    var existingCourse = _courseService.GetCourses().FirstOrDefault(c => c.Id == id);
+                    if (existingCourse == null)
+                    {
+                        ViewBag.Error = "Курс не найден";
+                        return View("Error");
+                    }
+
+                    // Обновляем данные
+                    existingCourse.Name = updatedCourse.Name;
+                    existingCourse.Description = updatedCourse.Description;
+                    existingCourse.ProfessorName = updatedCourse.ProfessorName;
+
+                    return RedirectToAction(nameof(Index));
+                }
+                return View(updatedCourse); // Если есть ошибки валидации
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                ViewBag.Error = $"Ошибка при редактировании: {ex.Message}";
+                return View("Error");
             }
         }
 
         // GET: CourseController/Delete/5
         public ActionResult Delete(int id)
         {
-            //return View();
-            _courseService.RemoveCourse(id);
-            return RedirectToAction(nameof(Index));
+            var course = _courseService.GetCourses().FirstOrDefault(c => c.Id == id);
+            if (course == null)
+            {
+                ViewBag.Error = "Курс не найден";
+                return View("Error");
+            }
+            return View(course); // Подтверждение удаления
         }
 
         // POST: CourseController/Delete/5
-        [HttpPost]
+        [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult DeleteConfirmed(int id)
         {
             try
             {
+                _courseService.RemoveCourse(id);
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                ViewBag.Error = $"Ошибка при удалении: {ex.Message}";
+                return View("Error");
             }
         }
     }

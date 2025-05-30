@@ -1,0 +1,9 @@
+﻿@model StudyTracker.Models.Course
+
+<h2>Удалить курс</h2>
+<p>Вы уверены, что хотите удалить курс <strong>@Model.Name</strong>?</p>
+<form asp-action="Delete">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger">Удалить</button>
+    <a asp-action="Index" class="btn btn-secondary">Отмена</a>
+</form>
