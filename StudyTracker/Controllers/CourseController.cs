@@ -11,7 +11,6 @@ namespace StudyTracker.Controllers
         private readonly CourseService _courseService;
         public CourseController(CourseService courseService, CoursesVmBuilder coursesVmBuilder)
         {
-            //_coursesVmBuilder = new CoursesVmBuilder();
             _coursesVmBuilder = coursesVmBuilder;
             _courseService = courseService;
         }
